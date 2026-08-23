@@ -3,11 +3,13 @@ marp: true
 
 ---
 
-# Prompts, skills e agentes de IA para a Promotoria de Justiça
+# Prompts, Skills e Agentes de IA para a Promotoria de Justiça
 
 ## José Eduardo de Souza Pimentel
 
-2026
+[Blog](https://jespimentel.blogspot.com/) | [GitHub](https://github.com/jespimentel) | [YouTube](https://www.youtube.com/@jespimentel)
+
+v. 2026-09
 
 ---
 
@@ -15,10 +17,10 @@ marp: true
 
 - Introdução à IA Agêntica
 - Engenharia de prompt
-- Agentes declarativos
-- Skills e MCP
-- Agentes de execução
-- Conclusão
+- Agentes declarativos do Copilot
+- Skills e MCP (conectores e plugins)
+- Agentes de execução e Harness
+- Dicas e conclusão
 
 ---
 
@@ -26,11 +28,44 @@ marp: true
 
 ---
 
-**Aviso nº 009/2025-CGMP**
+![bg right](img/attention.jpg)
 
-Considerações
+## Evolução dos LLM
 
-![bg fit](img/trafico-gpt.png)
+- **2017** -> Transformer + _self-attention_ (paralelização massiva)
+- **2018 a 2021** -> Escala + modelos de fundação (GPT e Bert) -> Capacidades emergentes
+- **2022 a 2023** -> Multimodalidade + expansão da tecnologia
+- **2024 ~** -> Raciocínio + Agentes (+ Eficiência)
+
+---
+
+**Acesso a Ferramentas por LLM (Tool Use)**
+
+- Acesso a dados atualizados, realização de cálculos ou interação com outros sistemas
+- Tecnologia agnóstica (JSON Schema)
+- Fluxo de comunicação:
+    - **1. Definição**: Lista de ferramentas declaradas em `JSON Schema`
+    - **2. Decisão**: O LLM reconhece a necessidade do uso e responde com um pedido de execução da ferramenta (`tool_calls` com argumentos)
+    - **3. Execução Externa**: O runtime/harness intercepta o JSON e executa a função real (API, banco, script)
+    - **4. Síntese**: O resultado é inserido no contexto para que a LLM gere a resposta
+
+---
+
+![bg fit](img/agentes.jpg)
+
+---
+
+## Aviso nº 009/2025-CGMP
+
+- Visão geral sobre a regulamentação do uso da IA
+- O que devemos restringir?
+- Opinião sincera sobre o tema
+
+---
+
+![bg right fit](img/trafico-gpt.png)
+
+> Em processo sob nossa análise, a ré usou o ChatGPT para gerar o "cardápio" com os tipos de drogas que comercializava
 
 ---
 
@@ -38,7 +73,7 @@ Considerações
 
 ---
 
-## Elementos estruturais de um bom prompt
+## Elementos estruturais do prompt
 
 | # | Elemento | O que define | Exemplo |
 |---|----------|--------------|---------|
@@ -56,9 +91,9 @@ Considerações
 
 ---
 
-## Marcação com Markdown, XML e Placeholders
+## Markdown, XML e Placeholders
 
-**Elementos do Markdown**
+**Markdown**
 
 | Marcação | Descrição no Prompt | Exemplo no Prompt |
 |----------|--------------------|--------------------|
@@ -117,35 +152,76 @@ protocolado em {{DATA_PROTOCOLO}}, considerando o prazo final em {{DATA_LIMITE}}
 
 ## Mão na massa
 
+- [Prompt para MPU](prompts/mpu.md)
+- [Prompt para extrair teses (Ex. de few-shot prompting)](prompts/extrator.md)
+- CoT e *Tool Use* em ação
 
 ---
 
-# Agentes declarativos
+# Agentes declarativos do Copilot
+
+---
+**Conhecimento**
+
+> Recuperação probabilística por RAG
+
+- **No prompt**: o que se aplica sempre (regras, template, restrições)
+- **No conhecimento**: referência estável, consultada conforme o caso (ex.: catálogo de modelos, manual de regras).
 
 ---
 
-Copilot Premium encontra a solução para o problema na peça de um colega...
+**Copilot Premium**
 
 ![](img/copilot-premium.png)
 
 ---
 
-# Skills e MCP
+## Mão na massa
 
-- Uma skill é, no mínimo, uma pasta com um arquivo obrigatório: o SKILL.md.
-- Frontmatter (YAML): os campos name e description ficam pré-carregados e servem de vitrine para o modelo escolher qual skill acionar.
-- `description`: o gatilho. Diz o que a skill faz e quando usá-la, com expressões, tipos de arquivo e tipos de tarefa que sinalizam a correspondência com o pedido.
-- Corpo (em Markdown): as instruções de execução. Procedimento passo a passo, regras de domínio e travas de segurança.
-- Regra prática: manter o corpo da skill enxuto (abaixo de ~500 linhas), como um índice do método que remete aos arquivos auxiliares.
+- [Contrarrazões com base de conhecimento](prompts/contrarrazoes.md)
+- [Criando a Valentina](prompts/valentina.md)
 
 ---
 
-**Exemplo**
+# Skills e MCP (conectores e plugins)
+
+---
+
+**Skills**
+
+- Quando usar?
+- Tecnologia agnóstica (Padrão aberto)
+- O que é?
+    - No mínimo: uma pasta com o arquivo SKILL.md
+    - _Frontamatter_ (`YAML`) pré-carregado:
+        - `name`: nome da Skill
+        - `description`: o que faz + gatilho
+    - Corpo: instruções de execução
+- Regra prática: < 500 linhas
+
+---
+
+**MCP (Model Context Protocol)**
+
+- Quando usar?
+    - Para conectar IAs a dados, ferramentas e APIs externas de forma padronizada
+- Tecnologia agnóstica (Padrão aberto)
+- O que é?
+    - Arquitetura Cliente-Servidor via JSON-RPC 2.0 
+    - 3 Primitivas principais expostas pelo servidor:
+        - `Tools`: Funções executáveis pela IA
+        - `Resources`: Dados e arquivos para contexto
+        - `Prompts`: Templates de interação reutilizáveis
+- Regra prática: 1 Servidor MCP = 1 Responsabilidade
+
+---
+
+**Exemplo:** ***Progressive Disclosure***
 
 ```markdown
 elaborar-denuncia/            # sobe como .zip (ou botão "salvar") em Customize > Skills
 ├── SKILL.md                  # frontmatter (name + description/gatilho) + método
-└── references/               # disclosure progressivo (lido sob demanda)
+└── references/               # descoberta progressiva (lido sob demanda)
     ├── template.md           # estrutura da peça — lido só ao redigir
     └── exemplos.md           # exemplos de saída — só sem modelo do índice/colado
 
@@ -159,12 +235,55 @@ Google Drive (externo, via MCP)
 
 ---
 
-# Agentes de execução
+## Mão na massa
+
+- [Examinando uma Skill](prompts/elaborar-denuncia.md)
+- Criando uma Skill com MCP
+- Compartilhamento de Skills
 
 ---
 
-# Conclusões
+# Agentes de Execução e Harness
 
+---
+
+**Agente de Execução e Harness**
+
+- Quando usar?
+    - Para tarefas autônomas que exigem execução de código e controle de estado
+- O que é?
+    - **Agente**: O modelo (LLM) responsável pelo raciocínio, planejamento e tomada de decisão
+    - **Harness**: O ambiente/runtime que envolve o agente para gerenciar a execução
+- Regra prática: A IA decide o *quê* fazer; o Harness possibilita a execução do plano
+
+
+---
+
+## Mão na massa
+
+- Pipeline de Alegações Finais
+- Pipeline de OCR
+- Extrair teses em lote
+
+**Bônus**
+- [Criando uma "Rotina" para concurseiros](prompts/concurso.md)
+
+---
+
+# Dicas e conclusões
+- Estrutura de prompt não é estética, é semântica
+- Divida tarefas complexas em subtarefas (agentes especializados). Isso vale para Skills também
+- O que conta é o Harness (onde estão os nossos dados?)
+- Teste no VS Code (extensões do Claude ou "Continue")
+
+---
+
+![bg fit](img/economia-tempo.jpg)
+![bg fit](img/memory-caching.jpg)
+
+---
+
+# Obrigado!
 
 ---
 
