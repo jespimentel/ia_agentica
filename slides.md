@@ -13,6 +13,7 @@ v. 2026-09
 
 ---
 
+![bg right](img/qrcode.png)
 # Agenda
 
 - Introdução à IA Agêntica
