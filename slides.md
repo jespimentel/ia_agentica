@@ -21,7 +21,7 @@ v. 2026-09
 - Agentes declarativos do Copilot
 - Skills e MCP (conectores e plugins)
 - Agentes de execução e Harness
-- Dicas e conclusão
+- Dicas e conclusões
 
 ---
 
@@ -286,9 +286,7 @@ Google Drive (externo, via MCP)
 
 # Obrigado!
 
----
-
-# Referências
+## Referências
 
 - [ANTHROPIC. Agent Skills (docs)](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
 
