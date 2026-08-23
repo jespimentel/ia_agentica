@@ -3,4 +3,4 @@
 ## José Eduardo de Souza Pimentel
 ---
 
-Material de estudo
+Material de apoio
