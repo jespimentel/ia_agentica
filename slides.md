@@ -146,8 +146,8 @@ protocolado em {{DATA_PROTOCOLO}}, considerando o prazo final em {{DATA_LIMITE}}
 |---|---|
 | Tarefa genérica e direta | Zero-shot |
 | Saída com formato rígido (petição, ofício) | Few-shot |
-| Análise jurídica com múltiplos critérios | Few-shot + CoT |
-| Cálculo de prescrição, verificação de antecedentes e reincidência | CoT obrigatório |
+| Análise jurídica com múltiplos critérios | Critérios claros + exemplos + raciocínio do modelo |
+| Cálculo de pena ou prescrição | Ferramenta/código determinístico + validação |
 
 ---
 
@@ -155,7 +155,7 @@ protocolado em {{DATA_PROTOCOLO}}, considerando o prazo final em {{DATA_LIMITE}}
 
 - [Prompt para MPU](prompts/mpu.md)
 - [Prompt para extrair teses (Ex. de few-shot prompting)](prompts/extrator.md)
-- CoT e *Tool Use* em ação
+- Raciocínio e *Tool Use* em ação
 
 ---
 
@@ -167,7 +167,8 @@ protocolado em {{DATA_PROTOCOLO}}, considerando o prazo final em {{DATA_LIMITE}}
 > Recuperação probabilística por RAG
 
 - **No prompt**: o que se aplica sempre (regras, template, restrições)
-- **No conhecimento**: referência estável, consultada conforme o caso (ex.: catálogo de modelos, manual de regras).
+- **No conhecimento**: referência estável, consultada conforme o caso (ex.: catálogo de modelos, manual de regras)
+- **Atenção**: RAG recupera contexto; não é memória e não garante a veracidade da resposta
 
 ---
 
@@ -272,10 +273,12 @@ Google Drive (externo, via MCP)
 ---
 
 # Dicas e conclusões
+
 - Estrutura de prompt não é estética, é semântica
-- Divida tarefas complexas em subtarefas (agentes especializados). Isso vale para Skills também
-- O que conta é o Harness (onde estão os nossos dados?)
-- Teste no VS Code (extensões do Claude ou "Continue")
+- Em agentes, pense em **Context Engineering**: contexto certo, na hora certa
+- Divida tarefas complexas em subtarefas; use outro agente apenas quando houver ganho verificável
+- Modelo importa, mas harness, ferramentas, contexto, estado e dados determinam a eficiência
+- Teste no VS Code (extensões do Claude, Codex ou "Continue")
 
 ---
 
