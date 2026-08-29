@@ -1,5 +1,14 @@
 ---
 marp: true
+style: |
+  section.columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  section.columns h2 {
+    grid-column: 1 / -1;
+  }
 
 ---
 
@@ -7,21 +16,22 @@ marp: true
 
 ## José Eduardo de Souza Pimentel
 
-[Blog](https://jespimentel.blogspot.com/) | [GitHub](https://github.com/jespimentel) | [YouTube](https://www.youtube.com/@jespimentel)
+[GitHub](https://github.com/jespimentel) | [Blog](https://jespimentel.blogspot.com/) | [YouTube](https://www.youtube.com/@jespimentel)
 
-v. 2026-09
+v. 2026.09
 
 ---
 
 ![bg right](img/qrcode.png)
+
 # Agenda
 
 - Introdução à IA Agêntica
-- Engenharia de prompt
-- Agentes declarativos do Copilot
+- Engenharia de Prompt
+- Agentes Declarativos do Copilot
 - Skills e MCP (conectores e plugins)
-- Agentes de execução e Harness
-- Dicas e conclusões
+- Agentes de Execução e Harness
+- Dicas e Conclusões
 
 ---
 
@@ -40,27 +50,15 @@ v. 2026-09
 
 ---
 
-**Acesso a Ferramentas por LLM (Tool Use)**
-
-- Acesso a dados atualizados, realização de cálculos ou interação com outros sistemas
-- Tecnologia agnóstica (JSON Schema)
-- Fluxo de comunicação:
-    - **1. Definição**: Lista de ferramentas declaradas em `JSON Schema`
-    - **2. Decisão**: O LLM reconhece a necessidade do uso e responde com um pedido de execução da ferramenta (`tool_calls` com argumentos)
-    - **3. Execução Externa**: O runtime/harness intercepta o JSON e executa a função real (API, banco, script)
-    - **4. Síntese**: O resultado é inserido no contexto para que a LLM gere a resposta
-
----
-
 ![bg fit](img/agentes.jpg)
 
 ---
 
 ## Aviso nº 009/2025-CGMP
 
-- Visão geral sobre a regulamentação do uso da IA
+- Visão geral sobre a regulamentação do uso da IA no MPSP
 - O que devemos restringir?
-- Opinião sincera sobre o tema
+- Opinião sobre o tema
 
 ---
 
@@ -70,29 +68,42 @@ v. 2026-09
 
 ---
 
-# Engenharia de prompt
+# Engenharia de Prompt
 
 ---
+
+<!-- _class: columns -->
 
 ## Elementos estruturais do prompt
 
-| # | Elemento | O que define | Exemplo |
-|---|----------|--------------|---------|
-| 1 | **Papel/contexto** | Persona e cenário da tarefa | *"Você é um promotor de justiça criminal e está sendo intimado da sentença fornecida em PDF."* |
-| 2 | **Restrições e tom** | Limites, formalidade, exclusões | *"Máximo de 500 palavras. Linguagem técnico-jurídica. Não cite jurisprudência."* |
-| 3 | **Exemplos (few-shot)** | Um ou dois modelos da saída desejada | Peça análoga já aprovada, parágrafo-modelo, estrutura de denúncia anterior |
+<div>
+
+### Como era:
+- Papel + contexto
+- Restrições + tom
+- Exemplos (few-shots)
+- Insumo factual
+- Instrução unívoca
+- Formato de saída
+
+</div>
+
+<div>
+
+### Como ficou:
+- Instruções claras
+- Objetivo explícito
+- Exemplos (quando necessários)
+- Delimitação de seções
+- Critérios de sucesso
+
+**(instrução <> dado)**
+
+</div>
 
 ---
 
-| # | Elemento | O que define | Exemplo |
-|---|----------|--------------|---------|
-| 4 | **Insumo factual** | O material sobre o qual o modelo trabalhará | Texto legal, peças de um inquérito, acórdão, documento anexado etc. |
-| 5 | **Instrução unívoca** | Rol das tarefas que o modelo deve executar ("analise", "compare", "liste", "reescreva" etc.) | *"Resuma o documento acima de forma estruturada, citando as infrações criminais cometidas."* |
-| 6 | **Formato de saída** | Estrutura esperada do resultado | *"Responda em Markdown com as seguintes seções: Fatos, Fundamentação e Requerimentos."* |
-
----
-
-## Markdown, XML e Placeholders
+## Delimitação das seções
 
 **Markdown**
 
@@ -124,7 +135,6 @@ Razões da apelação a fls. 210/215, com o seguinte conteúdo:
 Liste os pedidos contidos na apelação defensiva fornecida no contexto.
 </instrucao>
 ```
-
 ---
 
 **Placeholders**
@@ -145,9 +155,11 @@ protocolado em {{DATA_PROTOCOLO}}, considerando o prazo final em {{DATA_LIMITE}}
 | Cenário | Técnica recomendada |
 |---|---|
 | Tarefa genérica e direta | Zero-shot |
-| Saída com formato rígido (petição, ofício) | Few-shot |
+| Saída com formato rígido (petição, ofício, denúncia) | Few-shot |
 | Análise jurídica com múltiplos critérios | Critérios claros + exemplos + raciocínio do modelo |
-| Cálculo de pena ou prescrição | Ferramenta/código determinístico + validação |
+| Cálculo de pena ou prescrição | Ferramenta/código determinístico |
+
+**Chain-of-Thought (CoT)**: se o mecanismo nativo de raciocínio estiver desabilitado
 
 ---
 
@@ -159,7 +171,7 @@ protocolado em {{DATA_PROTOCOLO}}, considerando o prazo final em {{DATA_LIMITE}}
 
 ---
 
-# Agentes declarativos do Copilot
+# Agentes Declarativos do Copilot
 
 ---
 **Conhecimento**
@@ -178,14 +190,25 @@ protocolado em {{DATA_PROTOCOLO}}, considerando o prazo final em {{DATA_LIMITE}}
 
 ---
 
+![bg fit right](img/compartilhamento.png)
+
 ## Mão na massa
 
 - [Contrarrazões com base de conhecimento](prompts/contrarrazoes.md)
 - [Criando a Valentina](prompts/valentina.md)
+- Compartilhando agentes declarativos
 
 ---
 
 # Skills e MCP (conectores e plugins)
+
+---
+
+## Context engineering
+
+> A tendência conceitual mais importante atualmente é a passagem de prompt engineering para context engineering. Em sistemas agênticos, a qualidade não depende apenas da instrução, mas também de quais documentos, exemplos, resultados de busca, ferramentas, memórias, skills e estados devem entrar na janela de contexto. 
+
+- **Skills**: mecanismos de descoberta e carregamento sob demanda, que evitam o contexto excessivo.
 
 ---
 
@@ -214,7 +237,7 @@ protocolado em {{DATA_PROTOCOLO}}, considerando o prazo final em {{DATA_LIMITE}}
         - `Tools`: Funções executáveis pela IA
         - `Resources`: Dados e arquivos para contexto
         - `Prompts`: Templates de interação reutilizáveis
-- Regra prática: 1 Servidor MCP = 1 Responsabilidade
+- Regra prática (não obrigatória): 1 Servidor MCP = 1 Responsabilidade
 
 ---
 
@@ -241,7 +264,7 @@ Google Drive (externo, via MCP)
 
 - [Examinando uma Skill](prompts/elaborar-denuncia.md)
 - Criando uma Skill com MCP
-- Compartilhamento de Skills
+- Compartilhando Skills
 
 ---
 
@@ -258,7 +281,6 @@ Google Drive (externo, via MCP)
     - **Harness**: O ambiente/runtime que envolve o agente para gerenciar a execução
 - Regra prática: A IA decide o *quê* fazer; o Harness possibilita a execução do plano
 
-
 ---
 
 ## Mão na massa
@@ -272,18 +294,17 @@ Google Drive (externo, via MCP)
 
 ---
 
-# Dicas e conclusões
+# Dicas e Conclusões
 
 - Estrutura de prompt não é estética, é semântica
-- Em agentes, pense em **Context Engineering**: contexto certo, na hora certa
-- Divida tarefas complexas em subtarefas; use outro agente apenas quando houver ganho verificável
+- Em agentes, pense em **Context Engineering** (contexto certo, na hora certa)
+- Divida tarefas complexas em subtarefas; use outro agente apenas quando a vantagem for evidente
 - Modelo importa, mas harness, ferramentas, contexto, estado e dados determinam a eficiência
-- Teste no VS Code (extensões do Claude, Codex ou "Continue")
+- Teste o VS Code com as extensões do Claude, Codex ou "Continue"
 
 ---
 
 ![bg fit](img/economia-tempo.jpg)
-![bg fit](img/memory-caching.jpg)
 
 ---
 
