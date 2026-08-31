@@ -58,7 +58,7 @@ v. 2026.09
 
 - Visão geral sobre a regulamentação do uso da IA no MPSP
 - O que devemos restringir?
-- Opinião sobre o tema
+- Opinião pessoal
 
 ---
 
@@ -78,7 +78,7 @@ v. 2026.09
 
 <div>
 
-### Como era:
+### Engenharia "tradicional"
 - Papel + contexto
 - Restrições + tom
 - Exemplos (few-shots)
@@ -90,7 +90,7 @@ v. 2026.09
 
 <div>
 
-### Como ficou:
+### Engenharia "agêntica"
 - Instruções claras
 - Objetivo explícito
 - Exemplos (quando necessários)
@@ -167,7 +167,7 @@ protocolado em {{DATA_PROTOCOLO}}, considerando o prazo final em {{DATA_LIMITE}}
 
 - [Prompt para MPU](prompts/mpu.md)
 - [Prompt para extrair teses (Ex. de few-shot prompting)](prompts/extrator.md)
-- Raciocínio e *Tool Use* em ação
+- *Tool Use* em ação
 
 ---
 
@@ -285,12 +285,15 @@ Google Drive (externo, via MCP)
 
 ## Mão na massa
 
+- OCR
 - Pipeline de Alegações Finais
-- Pipeline de OCR
-- Extrair teses em lote
+- Extração de teses em lote (para o Obsidian)
 
-**Bônus**
+---
+
+## Bônus
 - [Criando uma "Rotina" para concurseiros](prompts/concurso.md)
+- Criando uma aplicação funcional
 
 ---
 
