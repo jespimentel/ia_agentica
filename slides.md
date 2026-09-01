@@ -165,8 +165,8 @@ protocolado em {{DATA_PROTOCOLO}}, considerando o prazo final em {{DATA_LIMITE}}
 
 ## Mão na massa
 
-- [Prompt para MPU](prompts/mpu.md)
-- [Prompt para extrair teses (Ex. de few-shot prompting)](prompts/extrator.md)
+- [Prompt para MPU](https://github.com/jespimentel/ia_agentica/blob/main/prompts/mpu.md)
+- [Prompt para extrair teses (Ex. de few-shot prompting)](https://github.com/jespimentel/ia_agentica/blob/main/prompts/extrator.md)
 - *Tool Use* em ação
 
 ---
@@ -194,8 +194,8 @@ protocolado em {{DATA_PROTOCOLO}}, considerando o prazo final em {{DATA_LIMITE}}
 
 ## Mão na massa
 
-- [Contrarrazões com base de conhecimento](prompts/contrarrazoes.md)
-- [Criando a Valentina](prompts/valentina.md)
+- [Contrarrazões com base de conhecimento](https://github.com/jespimentel/ia_agentica/blob/main/prompts/contrarrazoes.md)
+- [Criando a Valentina](https://github.com/jespimentel/ia_agentica/blob/main/prompts/valentina.md)
 - Compartilhando agentes declarativos
 
 ---
@@ -262,7 +262,7 @@ Google Drive (externo, via MCP)
 
 ## Mão na massa
 
-- [Examinando uma Skill](prompts/elaborar-denuncia.md)
+- [Examinando uma Skill](https://github.com/jespimentel/ia_agentica/blob/main/prompts/elaborar-denuncia.md)
 - Criando uma Skill com MCP
 - Compartilhando Skills
 
@@ -292,7 +292,7 @@ Google Drive (externo, via MCP)
 ---
 
 ## Bônus
-- [Criando uma "Rotina" para concurseiros](prompts/concurso.md)
+- [Criando uma "Rotina" para concurseiros](https://github.com/jespimentel/ia_agentica/blob/main/prompts/concurso.md)
 - Criando uma aplicação funcional
 
 ---
